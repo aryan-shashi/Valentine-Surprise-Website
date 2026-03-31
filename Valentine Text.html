@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background-image:url(rose.jpg);
+font-family:'Segoe UI',sans-serif;
+overflow:hidden;
+text-align:center;
+}
+
+h1{
+font-size:3rem;
+color:#ffe2e9;
+margin-bottom:40px;
+}
+
+button{
+font-size:1.3rem;
+padding:15px 40px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+transition:0.2s ease;
+position:relative;
+}
+
+#yesBtn{
+background:#ff3366;
+color:white;
+margin-right:20px;
+}
+
+#yesBtn:hover{
+transform:scale(1.1);
+}
+
+#noBtn{
+background:#444;
+color:white;
+position:absolute;
+}
+
+#tryImage{
+    margin-left: 550px;
+}
+
+.buttons{
+position:relative;
+height:100px;
+}
+
+.message{
+font-size:2rem;
+color:#ffe2e9;
+margin-top:30px;
+display:none;
+}
+
+#tryImage{
+display:none;
+margin-top:20px;
+width:200px;
+border-radius:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="question">Hey… is that you? 🤨</h1>
+
+<div class="buttons">
+<button id="yesBtn">Yes!</button>
+<button id="noBtn">No!</button>
+</div>
+
+
+
+<div class="message" id="loveMessage">
+Yayyy! I knew it! 😍💗<br>
+<img src="yapapa.gif">
+    <audio id="noSound">
+    <source src="eh-eh-ehhhh.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<img id="tryImage" src="sad-cat.jpg">
+
+</div>
+
+<script>
+
+const questions = [
+"Hey… is that you? 🤨",
+"Do you like the little things in life?",
+"Do you ever feel like you’re kind of special? 🌹",
+"Do I make you smile sometimes?",
+"Do you think we vibe well together?",
+"Be honest… do you find me a little cute? 😌",
+"I really like you… do you feel it too?",
+"Can I ask you something a bit personal?",
+"Would you like to be with me forever?"
+];
+
+
+let currentQuestion = 0;
+let attempts = 0;
+
+const questionText = document.getElementById("question");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const message = document.getElementById("loveMessage");
+const image = document.getElementById("tryImage");
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion < questions.length){
+
+questionText.innerText = questions[currentQuestion];
+
+}
+
+}
+
+function moveButton(){
+
+const container = document.querySelector(".container");
+
+const maxX = container.offsetWidth - noBtn.offsetWidth;
+const maxY = container.offsetHeight - noBtn.offsetHeight;
+
+const randomX = Math.random() * maxX;
+const randomY = Math.random() * maxY;
+
+noBtn.style.left = randomX + "px";
+noBtn.style.top = randomY + "px";
+
+attempts++;
+
+if(attempts >= 5){
+image.style.display="block";
+}
+
+}
+
+yesBtn.addEventListener("click",()=>{
+
+if(currentQuestion < questions.length-1){
+
+nextQuestion();
+
+}else{
+
+message.style.display="block";
+image.style.display="none";
+
+}
+
+});
+
+const noSound = document.getElementById("noSound");
+
+noBtn.addEventListener("click",()=>{
+
+if(currentQuestion < questions.length-1){
+
+noSound.play(); // play sound first
+
+setTimeout(()=>{
+location.reload(); // then refresh after slight delay
+}, 6500); // 0.5 sec delay so sound actually plays
+
+}
+
+});
+
+noBtn.addEventListener("mouseenter",()=>{
+
+if(currentQuestion === questions.length-1){
+
+moveButton();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
